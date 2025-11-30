@@ -1,0 +1,6 @@
+message.db
+coverage.html
+coverage.out
+coverage_pkg.out
+.DS_Store
+.env

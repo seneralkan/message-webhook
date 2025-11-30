@@ -1,0 +1,123 @@
+basePath: /
+definitions:
+  go-template-microservice_internal_resources_response.SentMessageResponse:
+    properties:
+      content:
+        type: string
+      external_message_id:
+        type: string
+      message_id:
+        type: integer
+      sent_at:
+        type: string
+      to:
+        type: string
+    type: object
+  go-template-microservice_internal_resources_response.SentMessagesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/go-template-microservice_internal_resources_response.SentMessageResponse'
+        type: array
+      status:
+        type: string
+      timestamp:
+        type: integer
+    type: object
+  go-template-microservice_pkg_utils.ErrorSchema:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+  go-template-microservice_pkg_utils.HTTPErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/go-template-microservice_pkg_utils.ErrorSchema'
+      status:
+        type: string
+      timestamp:
+        type: integer
+    type: object
+  go-template-microservice_pkg_utils.HTTPSuccessResponse:
+    properties:
+      data: {}
+      status:
+        type: string
+      timestamp:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: The API provides go template-microservice service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: go-template-microservice API
+  version: "0.1"
+paths:
+  /messages/sent:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of sent messages
+      parameters:
+      - default: 10
+        description: Maximum number of messages to retrieve
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/go-template-microservice_internal_resources_response.SentMessagesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/go-template-microservice_pkg_utils.HTTPErrorResponse'
+      summary: List Sent Messages
+      tags:
+      - Messages
+  /messages/start:
+    post:
+      consumes:
+      - application/json
+      description: Starts the message sending scheduler
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/go-template-microservice_pkg_utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/go-template-microservice_pkg_utils.HTTPErrorResponse'
+      summary: Start Message Scheduler
+      tags:
+      - Messages
+  /messages/stop:
+    post:
+      consumes:
+      - application/json
+      description: Stops the message sending scheduler
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/go-template-microservice_pkg_utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/go-template-microservice_pkg_utils.HTTPErrorResponse'
+      summary: Stop Message Scheduler
+      tags:
+      - Messages
+swagger: "2.0"
